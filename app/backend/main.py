@@ -1,11 +1,14 @@
 from flask import Flask, render_template
 from database import init_db
 from routes import auth_blueprint
+import os
 
-app = Flask(__name__)
+TEMPLATE_DIR = os.path.abspath("frontend/templates")
+
+app = Flask(__name__, template_folder=TEMPLATE_DIR)
 app.register_blueprint(auth_blueprint)
 
-@app.before_first_request
+@app.before_request
 def setup():
     init_db()
 
